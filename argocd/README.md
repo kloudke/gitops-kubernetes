@@ -26,4 +26,4 @@ Access via `https://argocd.cloudspinx.dpdns.org`.
   ```
 
 ## App of Apps
-You can configure ArgoCD to watch this repository and automatically sync applications defined in `argocd/applications/` (if configured).
+We can now configure ArgoCD to watch this repository and automatically sync applications defined in `argocd/applications/`.
