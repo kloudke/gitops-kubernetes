@@ -1,5 +1,5 @@
 global:
-  domain: argocd.cloudspinx.dpdns.org
+  domain: argocd.kloudke.dpdns.org
 
 server:
   extraArgs:
