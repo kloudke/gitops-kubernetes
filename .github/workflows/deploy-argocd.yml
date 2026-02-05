@@ -1,4 +1,4 @@
-name: Deploy Components
+name: Deploy ArgoCD
 
 on:
   workflow_dispatch:
