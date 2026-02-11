@@ -31,3 +31,5 @@ jobs:
         run: |
           kubectl apply -f platform-project.yaml
           kubectl get appprojects -n argocd
+
+          

@@ -45,4 +45,5 @@ jobs:
             -f argocd/values.yaml
           kubectl get pods -n argocd
           kubectl get svc -n argocd
-               
+     
+          
