@@ -4,6 +4,7 @@ metadata:
   name: platform-apps
   namespace: argocd
 spec:
+  project: platform
   source:
     repoURL: https://github.com/kloudke/gitops-kubernetes.git
     targetRevision: main
