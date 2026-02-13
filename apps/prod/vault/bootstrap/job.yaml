@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-bootstrap
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      serviceAccountName: terraform
+      restartPolicy: Never
+      containers:
+        - name: terraform
+          image: hashicorp/terraform:1.6
+          command:
+            - sh
+            - -c
+            - |
+              cd /config
+              terraform init
+              terraform apply -auto-approve
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: vault-terraform-config
