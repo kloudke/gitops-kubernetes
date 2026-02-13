@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-terraform-config
+  namespace: vault
+data:
+  main.tf: |
+    terraform {
+      required_providers {
+        vault = {
+          source  = "hashicorp/vault"
+          version = "~> 3.25"
+        }
+        random = {
+          source  = "hashicorp/random"
+          version = "~> 3.6"
+        }
+      }
+    }
+
+    provider "vault" {
+      address = "http://vault.vault.svc:8200"
+
+      auth_login {
+        path = "auth/kubernetes/login"
+        parameters = {
+          role = "terraform-role"
+        }
+      }
+    }
+
+    resource "random_password" "whoami_password" {
+      length  = 24
+      special = true
+    }
+
+    resource "vault_kv_secret_v2" "whoami" {
+      mount = "secret"
+      name  = "whoami"
+
+      data_json = jsonencode({
+        username = "admin"
+        password = random_password.whoami_password.result
+      })
+    }
