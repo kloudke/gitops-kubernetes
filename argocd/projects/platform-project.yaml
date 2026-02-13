@@ -4,7 +4,7 @@ metadata:
   name: platform
   namespace: argocd
 spec:
-  description: Platform-level applications
+  description: Platform-level Applications
 
   sourceRepos:
     - https://github.com/kloudke/gitops-kubernetes.git
