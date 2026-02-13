@@ -38,6 +38,26 @@ vault write auth/kubernetes/config \
     kubernetes_host="https://kubernetes.default.svc:443"
 ```
 
+### Create Vault Secret
+
+Exec into the vault pod:
+```bash
+kubectl exec -it vault-0 -- /bin/sh
+```
+
+Enable the kv-v2 engine:
+```bash
+vault secrets enable -path=secret kv-v2
+```
+
+Create a secret:
+```bash
+vault kv put secret/VAULT_SECRET_NAME \
+    username=VAULT_SECRET_VALUE \
+    password=VAULT_SECRET_VALUE
+exit
+```
+
 ### Create a Kubernetes Service Account for External Secrets
 
 Create vault-policy:
