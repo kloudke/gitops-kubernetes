@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-bootstrap
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/kloudke/gitops-kubernetes.git
+    targetRevision: main
+    path: apps/prod/vault/bootstrap
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vault
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
