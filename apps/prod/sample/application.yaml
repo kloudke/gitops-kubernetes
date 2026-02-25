@@ -1,15 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: whoami-sample
+  name: whoami
+  namespace: argocd
 spec:
   source:
     repoURL: https://github.com/traefik/whoami.git
     path: deploy/kubernetes
   destination:
     server: https://kubernetes.default.svc
-    namespace: whoami-sample
+    namespace: whoami
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
