@@ -7,7 +7,7 @@ spec:
   project: platform
   source:
     repoURL: https://charts.external-secrets.io
-    chart: external-secrets/external-secrets
+    chart: external-secrets
     targetRevision: 0.9.11
     helm:
       values: |
