@@ -2,7 +2,7 @@ name: Deploy ArgoCD Platform Project
 
 on:
   workflow_dispatch:
-  #push:
+  push:
 
 jobs:
   deploy-argocd-platform-project:
