@@ -4,7 +4,7 @@
 #   name: vault-bootstrap
 #   namespace: vault
 #   annotations:
-#     argocd.argoproj.io/sync-wave: "1"
+#     argocd.argoproj.io/sync-wave: "3"
 # spec:
 #   backoffLimit: 1
 #   template:
@@ -27,4 +27,4 @@
 #       volumes:
 #         - name: config
 #           configMap:
-#             name: vault-terraform-config
+#             name: vault-bootstrap-config
