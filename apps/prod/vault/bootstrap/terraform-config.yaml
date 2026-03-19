@@ -1,8 +1,10 @@
 # apiVersion: v1
 # kind: ConfigMap
 # metadata:
-#   name: vault-terraform-config
+#   name: vault-bootstrap-config
 #   namespace: vault
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
 # data:
 #   main.tf: |
 #     terraform {
@@ -19,7 +21,7 @@
 #     }
 
 #     provider "vault" {
-#       address = "http://vault.vault.svc:8200"
+#       address = "http://hashicorp-vault.vault.svc:8200"
 
 #       auth_login {
 #         path = "auth/kubernetes/login"
@@ -29,17 +31,17 @@
 #       }
 #     }
 
-#     resource "random_password" "whoami_password" {
+#     resource "random_password" "erpnext_password" {
 #       length  = 24
 #       special = true
 #     }
 
-#     resource "vault_kv_secret_v2" "whoami" {
+#     resource "vault_kv_secret_v2" "erpnext" {
 #       mount = "secret"
-#       name  = "whoami"
+#       name  = "erpnext"
 
 #       data_json = jsonencode({
 #         username = "admin"
-#         password = random_password.whoami_password.result
+#         password = random_password.erpnext_password.result
 #       })
 #     }
