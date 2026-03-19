@@ -1,0 +1,32 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: vault-setup-config
+#   namespace: vault
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "0"
+# data:
+#   terraform-policy.hcl: |
+#     path "secret/*" {
+#       capabilities = ["create", "update", "read", "delete", "list"]
+#     }
+
+#     path "auth/kubernetes/*" {
+#       capabilities = ["create", "update", "read"]
+#     }
+
+#     path "sys/mounts/*" {
+#       capabilities = ["create", "update", "read"]
+#     }
+
+#   vault-role.sh: |
+#     #!/bin/sh
+#     # Write Policy
+#     vault policy write terraform-policy /config/terraform-policy.hcl
+
+#     #Create Vault Role for Terraform
+#     vault write auth/kubernetes/role/terraform-role \
+#       bound_service_account_names=terraform \
+#       bound_service_account_namespaces=vault \
+#       policies=terraform-policy \
+#       ttl=1h
