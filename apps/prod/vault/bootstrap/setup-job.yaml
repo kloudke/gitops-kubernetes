@@ -1,35 +1,35 @@
-# apiVersion: batch/v1
-# kind: Job
-# metadata:
-#   name: vault-setup
-#   namespace: vault
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "1"
-# spec:
-#   backoffLimit: 1
-#   template:
-#     spec:
-#       serviceAccountName: terraform
-#       restartPolicy: Never
-#       containers:
-#         - name: vault
-#           image: hashicorp/vault:1.15
-#           command:
-#             - sh
-#             - -c
-#             - |
-#               cp /config/vault-role.sh /tmp/vault-role.sh
-#               chmod +x /tmp/vault-role.sh
-#               /tmp/vault-role.sh
-#           env:
-#             - name: VAULT_ADDR
-#               value: "http://hashicorp-vault.vault.svc:8200"
-#             - name: VAULT_TOKEN
-#               value: "root"
-#           volumeMounts:
-#             - name: config
-#               mountPath: /config
-#       volumes:
-#         - name: config
-#           configMap:
-#             name: vault-setup-config
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-setup
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      serviceAccountName: terraform
+      restartPolicy: Never
+      containers:
+        - name: vault
+          image: hashicorp/vault:1.15
+          command:
+            - sh
+            - -c
+            - |
+              cp /config/vault-role.sh /tmp/vault-role.sh
+              chmod +x /tmp/vault-role.sh
+              /tmp/vault-role.sh
+          env:
+            - name: VAULT_ADDR
+              value: "http://hashicorp-vault.vault.svc:8200"
+            - name: VAULT_TOKEN
+              value: "root"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: vault-setup-config

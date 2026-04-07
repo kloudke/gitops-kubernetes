@@ -1,47 +1,47 @@
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: vault-bootstrap-config
-#   namespace: vault
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "2"
-# data:
-#   main.tf: |
-#     terraform {
-#       required_providers {
-#         vault = {
-#           source  = "hashicorp/vault"
-#           version = "~> 3.25"
-#         }
-#         random = {
-#           source  = "hashicorp/random"
-#           version = "~> 3.6"
-#         }
-#       }
-#     }
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-bootstrap-config
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+data:
+  main.tf: |
+    terraform {
+      required_providers {
+        vault = {
+          source  = "hashicorp/vault"
+          version = "~> 3.25"
+        }
+        random = {
+          source  = "hashicorp/random"
+          version = "~> 3.6"
+        }
+      }
+    }
 
-#     provider "vault" {
-#       address = "http://hashicorp-vault.vault.svc:8200"
+    provider "vault" {
+      address = "http://hashicorp-vault.vault.svc:8200"
 
-#       auth_login {
-#         path = "auth/kubernetes/login"
-#         parameters = {
-#           role = "terraform-role"
-#         }
-#       }
-#     }
+      auth_login {
+        path = "auth/kubernetes/login"
+        parameters = {
+          role = "terraform-role"
+        }
+      }
+    }
 
-#     resource "random_password" "erpnext_password" {
-#       length  = 24
-#       special = true
-#     }
+    resource "random_password" "erpnext_password" {
+      length  = 24
+      special = true
+    }
 
-#     resource "vault_kv_secret_v2" "erpnext" {
-#       mount = "secret"
-#       name  = "erpnext"
+    resource "vault_kv_secret_v2" "erpnext" {
+      mount = "secret"
+      name  = "erpnext"
 
-#       data_json = jsonencode({
-#         username = "admin"
-#         password = random_password.erpnext_password.result
-#       })
-#     }
+      data_json = jsonencode({
+        username = "admin"
+        password = random_password.erpnext_password.result
+      })
+    }
